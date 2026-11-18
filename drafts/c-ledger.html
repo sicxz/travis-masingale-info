@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>travis masingale // iamsivart (draft C)</title>
+<meta name="description" content="Travis Masingale. Professor at Eastern Washington University. CV: teaching, talks, exhibitions and service.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Tokens lifted from the DESN 368 light theme (fall2026.css) */
+:root {
+  --ink: #172128;
+  --paper: #f5f7f8;
+  --brick: #b8392d;
+  --blue: #09627b;
+  --line: #c9d1d5;
+  --sun: #efc55b;
+  --muted: #4b5961;
+  --shade: #d0dadf;
+  --panel: #1d2e36;
+  --sans: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'DM Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.65 var(--sans); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p, ul, ol, table { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+h1, h2, h3 { line-height: 1.12; letter-spacing: -.035em; text-transform: lowercase; }
+a { color: var(--blue); text-underline-offset: .2em; text-decoration-thickness: 1px; }
+a:hover { color: var(--brick); }
+:focus-visible { outline: 3px solid #0756d4; outline-offset: 4px; }
+.sl { font-family: var(--mono); font-weight: 400; letter-spacing: 0; color: var(--brick); }
+.y .sl, .d .sl, .m .sl { color: inherit; }
+.nw { white-space: nowrap; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.wordmark { display: inline-block; padding: 14px 0; }
+.skip { position: absolute; top: -80px; left: 20px; z-index: 20; padding: 12px; background: #fff; color: var(--ink); }
+.skip:focus { top: 12px; }
+.button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 21px; border: 2px solid var(--ink); border-radius: 3px; background: var(--ink); color: #fff; font: 600 16px/1.2 var(--sans); text-decoration: none; cursor: pointer; }
+.button:hover { background: var(--brick); border-color: var(--brick); color: #fff; }
+.button.secondary { background: transparent; color: var(--ink); }
+.button.secondary:hover { color: #fff; }
+.y { font: 13px/1.9 var(--mono); color: var(--muted); white-space: nowrap; }
+.t { font-weight: 600; font-size: 18px; line-height: 1.35; }
+.d { font-size: 15px; line-height: 1.5; color: var(--muted); }
+.m { font-size: 14px; line-height: 1.5; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+@media print {
+  body { background: #fff; font-size: 10.5pt; }
+  .no-print { display: none !important; }
+  a { color: inherit; text-decoration: none; }
+  li, tr { break-inside: avoid; }
+  h2, h3 { break-after: avoid; }
+  .t { font-size: 10.5pt; }
+  .d, .m { font-size: 9pt; }
+  .y, .tag { font-size: 8pt; line-height: 1.8; }
+}
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+.topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 68px; border-bottom: 1px solid var(--line); }
+.wordmark { font: 500 17px/1 var(--mono); color: var(--ink); text-decoration: none; }
+.wordmark span { color: var(--brick); margin-right: 6px; }
+.topbar nav { display: flex; gap: 22px; font-size: 15px; }
+.topbar nav a, .topbar nav button { padding: 12px 0; border: 0; background: none; color: var(--ink); font: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .2em; cursor: pointer; }
+.topbar nav a:hover, .topbar nav button:hover { color: var(--brick); }
+
+.hero { display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: 72px; padding: 64px 0 72px; }
+.plate { padding: 44px 40px 48px; background: var(--sun); box-shadow: 16px 16px 0 var(--shade); transform: rotate(-1deg); }
+.plate .swatch { display: block; width: 48px; height: 8px; margin-bottom: 20px; background: var(--brick); }
+.plate h1 { font-size: clamp(50px, 6.6vw, 92px); line-height: .94; letter-spacing: -.065em; }
+.plate p { margin-top: 22px; font: 15px/1.5 var(--mono); }
+.plate .sl { color: var(--ink); }
+.eyebrow { font-size: 15px; font-weight: 600; color: var(--brick); }
+.intro { margin: 14px 0 24px; max-width: 30ch; font-size: 23px; line-height: 1.45; }
+.hero-meta { padding-left: 14px; border-left: 3px solid var(--brick); font-size: 15px; }
+
+.base { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; padding: 36px 0 20px; border-top: 1px solid var(--line); }
+.base h2 { margin-bottom: 16px; font-size: 24px; }
+.base h2:not(:first-child) { margin-top: 36px; }
+.base li { display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 0 16px; padding: 10px 0; }
+.base .t { font-size: 17px; }
+.areas { font-size: 19px; font-weight: 600; line-height: 1.6; letter-spacing: -.015em; }
+
+.record { padding-top: 56px; }
+.record > h2 { font-size: clamp(32px, 3.6vw, 46px); letter-spacing: -.045em; }
+.record > .lede { margin-top: 10px; font-size: 15px; color: var(--muted); }
+.strip { display: grid; grid-template-columns: repeat(24, minmax(0, 1fr)); align-items: end; gap: 6px; height: 132px; margin-top: 30px; }
+.strip a { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; white-space: nowrap; color: var(--muted); font: 11px/1 var(--mono); text-align: center; text-decoration: none; }
+.strip a i { display: block; align-self: stretch; min-height: 1px; margin-bottom: 8px; background: var(--ink); transition: height .2s; }
+.strip a:hover i, .strip a:focus-visible i { background: var(--brick); }
+.strip a.empty { pointer-events: none; }
+.strip a.empty i { background: var(--line); }
+
+.cmd { position: sticky; top: 0; z-index: 4; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin-top: 28px; padding: 10px 18px; background: var(--panel); color: #c9eced; font: 14px/1 var(--mono); }
+.cmd .p { margin-right: 6px; white-space: nowrap; }
+.cmd .p b { font-weight: 400; color: var(--sun); }
+.cmd button { min-height: 40px; padding: 0 10px; border: 0; border-radius: 3px; background: none; color: #c9eced; font: inherit; cursor: pointer; }
+.cmd button:hover { color: #fff; text-decoration: underline; text-underline-offset: .3em; }
+.cmd button[aria-pressed="true"] { background: var(--sun); color: var(--ink); }
+.cmd output { margin-left: auto; color: #9fbfc4; }
+
+.ledger > li { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 0 40px; padding: 30px 0 34px; border-bottom: 1px solid var(--line); scroll-margin-top: 64px; }
+.ledger h3 { position: sticky; top: 84px; align-self: start; font-size: 60px; line-height: .9; letter-spacing: -.065em; }
+.ledger h3 small { display: block; margin-top: 12px; font: 400 13px/1 var(--mono); letter-spacing: 0; color: var(--muted); }
+.ledger ul li { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 0 20px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.ledger ul li:first-child { padding-top: 4px; }
+.ledger ul li:last-child, .ledger ul li.last { padding-bottom: 0; border-bottom: 0; }
+.tag { font: 13px/1.9 var(--mono); color: var(--muted); white-space: nowrap; }
+.tag .sl { color: inherit; }
+.ledger .d { margin-top: 2px; }
+[hidden] { display: none !important; }
+
+.footer { margin-top: 72px; font-size: 14px; }
+.footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; padding-bottom: 40px; }
+.footer nav { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+.footer nav a { padding: 10px 0; }
+
+@media screen and (max-width: 860px) {
+  .wrap { padding: 0 20px; }
+  .hero { grid-template-columns: 1fr; gap: 40px; padding: 32px 0 48px; }
+  .plate { margin-right: 12px; padding: 30px 26px 34px; box-shadow: 10px 10px 0 var(--shade); }
+  .base { grid-template-columns: 1fr; gap: 28px; }
+  .base li { grid-template-columns: 1fr; }
+  .strip { gap: 3px; height: 104px; }
+  .strip .lab { visibility: hidden; }
+  .strip a:nth-child(5n) .lab, .strip a:first-child .lab { visibility: visible; }
+  .cmd { position: static; padding: 12px 14px; }
+  .cmd .p { width: 100%; padding: 6px 0 8px; }
+  .cmd button { min-height: 44px; }
+  .cmd output { width: 100%; margin: 0; padding: 10px 0 6px; }
+  .ledger > li { grid-template-columns: 1fr; padding: 24px 0 26px; }
+  .ledger h3 { position: static; margin-bottom: 14px; font-size: 44px; }
+  .ledger h3 small { display: inline; margin-left: 10px; }
+  .ledger ul li { grid-template-columns: 1fr; }
+}
+@media print {
+  .topbar, .strip, .cmd { display: none; }
+  .hero { display: block; padding: 0 0 14pt; }
+  .plate { padding: 0; background: none; box-shadow: none; transform: none; }
+  .plate h1 { font-size: 30pt; }
+  .eyebrow { margin-top: 8pt; font-size: 9pt; }
+  .intro { margin: 4pt 0 8pt; max-width: none; font-size: 12pt; }
+  .hero-meta { font-size: 9pt; }
+  .base { padding: 12pt 0; gap: 24pt; }
+  .base h2 { margin-bottom: 4pt; font-size: 14pt; }
+  .base h2:not(:first-child) { margin-top: 12pt; }
+  .base li { grid-template-columns: 70pt 1fr; padding: 3pt 0; }
+  .base .t { font-size: 10pt; }
+  .areas { font-size: 10.5pt; }
+  .record { padding-top: 12pt; }
+  .record > h2 { font-size: 18pt; }
+  .record > .lede { display: none; }
+  .ledger h3 small { margin-top: 4pt; font-size: 7.5pt; }
+  .footer { margin-top: 18pt; font-size: 8pt; }
+  .ledger > li { display: block; padding: 8pt 0; break-inside: auto; }
+  .ledger h3 { position: static; margin-bottom: 3pt; font-size: 14pt; }
+  .ledger h3 small { display: inline; margin-left: 6pt; }
+  .ledger ul li { grid-template-columns: 110pt 1fr; padding: 3pt 0; }
+  [hidden] { display: grid !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar no-print">
+  <div class="wrap">
+    <a class="wordmark" href="#top"><span>$</span>make cv</a>
+    <nav aria-label="Page"><a href="#record">the record</a><button type="button" onclick="window.print()">print</button></nav>
+  </div>
+</header>
+<main id="main" class="wrap">
+  <section class="hero" id="top">
+    <div class="plate">
+      <span class="swatch"></span>
+      <h1>travis<br>masingale</h1>
+      <p>// iamsivart</p>
+    </div>
+    <div>
+      <p class="eyebrow">professor @ eastern washington university</p>
+      <p class="intro">professional learner, specialist in obscure details.</p>
+      <p class="hero-meta">2022–23 <span class="sl">//</span> sabbatical researching computational design and photography</p>
+    </div>
+  </section>
+
+  <section class="base" aria-label="Teaching and education">
+    <div>
+      <h2>teaching</h2>
+      <ul><li><span class="y">2024 <span class="sl">//</span> present</span><div><p class="t">Professor</p><p class="d">Eastern Washington University, Spokane, WA</p></div></li><li><span class="y">2018 <span class="sl">//</span> 2024</span><div><p class="t">Associate Professor</p><p class="d">Eastern Washington University, Spokane, WA</p></div></li><li><span class="y">2012 <span class="sl">//</span> 2018</span><div><p class="t">Assistant Professor</p><p class="d">Eastern Washington University, Cheney, WA</p></div></li><li><span class="y">2010 <span class="sl">//</span> 2012</span><div><p class="t">Graduate Teaching Intern</p><p class="d">Maryland Institute College of Art, Baltimore, MD</p></div></li><li><span class="y">2009 <span class="sl">//</span> 2010</span><div><p class="t">Adjunct Faculty</p><p class="d">Eastern Washington University, Cheney, WA</p></div></li><li><span class="y">2009 <span class="sl">//</span> 2010</span><div><p class="t">Substitute Faculty</p><p class="d">Eastern Washington University, Cheney WA</p></div></li></ul>
+    </div>
+    <div>
+      <h2>education</h2>
+      <ul><li><time class="y" datetime="2012">2012</time><div><p class="t">M.F.A. Photographic and Electronic Media</p><p class="d">Maryland Institute College of Art, Baltimore, MD</p></div></li><li><time class="y" datetime="2004">2004</time><div><p class="t">B.A. Visual Communication Design<br>B.A. Fine Art (studio)</p><p class="d">Eastern Washington University, Cheney, WA</p></div></li><li><time class="y" datetime="2001">2001</time><div><p class="t">Associates of Fine Art</p><p class="d">Spokane Falls Community College, Spokane, WA</p></div></li></ul>
+      <h2>areas of interest and teaching</h2>
+      <p class="areas"><span class="nw">Remix <span class="sl">//</span></span> <span class="nw">Digital Photography <span class="sl">//</span></span> <span class="nw">Emergent Design <span class="sl">//</span></span> <span class="nw">Typography <span class="sl">//</span></span> <span class="nw">Electronic Media <span class="sl">//</span></span> <span class="nw">Packaging Design <span class="sl">//</span></span> <span class="nw">Semiotics <span class="sl">//</span></span> Design Theory</p>
+    </div>
+  </section>
+
+  <section class="record" id="record">
+    <h2>the record</h2>
+    <p class="lede">74 entries, newest first. Each bar is a year. Pick a bar to jump to it.</p>
+    <nav class="strip no-print" aria-label="Jump to year">
+      <a href="#y2001" data-counts='{"exhibitions":1,"talks":0,"conferences":0,"workshops":0,"recognition":1,"service":0}'><i style="height:22%"></i><span class="lab" aria-hidden="true">01</span><span class="vh">2001, 2 entries</span></a>
+      <a href="#y2002" class="empty" tabindex="-1" aria-hidden="true" data-counts='{"exhibitions":0,"talks":0,"conferences":0,"workshops":0,"recognition":0,"service":0}'><i style="height:0%"></i><span class="lab" aria-hidden="true">02</span><span class="vh">2002, 0 entries</span></a>
+      <a href="#y2003" class="empty" tabindex="-1" aria-hidden="true" data-counts='{"exhibitions":0,"talks":0,"conferences":0,"workshops":0,"recognition":0,"service":0}'><i style="height:0%"></i><span class="lab" aria-hidden="true">03</span><span class="vh">2003, 0 entries</span></a>
+      <a href="#y2004" data-counts='{"exhibitions":2,"talks":0,"conferences":0,"workshops":0,"recognition":0,"service":0}'><i style="height:22%"></i><span class="lab" aria-hidden="true">04</span><span class="vh">2004, 2 entries</span></a>
+      <a href="#y2005" class="empty" tabindex="-1" aria-hidden="true" data-counts='{"exhibitions":0,"talks":0,"conferences":0,"workshops":0,"recognition":0,"service":0}'><i style="height:0%"></i><span class="lab" aria-hidden="true">05</span><span class="vh">2005, 0 entries</span></a>
+      <a href="#y2006" data-counts='{"exhibitions":1,"talks":0,"conferences":0,"workshops":0,"recognition":0,"service":0}'><i style="height:11%"></i><span class="lab" aria-hidden="true">06</span><span class="vh">2006, 1 entry</span></a>
+      <a href="#y2007" data-counts='{"exhibitions":2,"talks":0,"conferences":0,"workshops":0,"recognition":0,"service":0}'><i style="height:22%"></i><span class="lab" aria-hidden="true">07</span><span class="vh">2007, 2 entries</span></a>
+      <a href="#y2008" data-counts='{"exhibitions":3,"talks":0,"conferences":0,"workshops":0,"recognition":0,"service":0}'><i style="height:33%"></i><span class="lab" aria-hidden="true">08</span><span class="vh">2008, 3 entries</span></a>
+      <a href="#y2009" data-counts='{"exhibitions":3,"talks":0,"conferences":0,"workshops":0,"recognition":0,"service":0}'><i style="height:33%"></i><span class="lab" aria-hidden="true">09</span><span class="vh">2009, 3 entries</span></a>
+      <a href="#y2010" data-counts='{"exhibitions":2,"talks":0,"conferences":0,"workshops":0,"recognition":0,"service":0}'><i style="height:22%"></i><span class="lab" aria-hidden="true">10</span><span class="vh">2010, 2 entries</span></a>
+      <a href="#y2011" data-counts='{"exhibitions":4,"talks":0,"conferences":0,"workshops":2,"recognition":0,"service":0}'><i style="height:67%"></i><span class="lab" aria-hidden="true">11</span><span class="vh">2011, 6 entries</span></a>
+      <a href="#y2012" data-counts='{"exhibitions":6,"talks":0,"conferences":0,"workshops":2,"recognition":1,"service":0}'><i style="height:100%"></i><span class="lab" aria-hidden="true">12</span><span class="vh">2012, 9 entries</span></a>
+      <a href="#y2013" data-counts='{"exhibitions":3,"talks":1,"conferences":0,"workshops":0,"recognition":0,"service":0}'><i style="height:44%"></i><span class="lab" aria-hidden="true">13</span><span class="vh">2013, 4 entries</span></a>
+      <a href="#y2014" data-counts='{"exhibitions":2,"talks":3,"conferences":2,"workshops":1,"recognition":0,"service":0}'><i style="height:89%"></i><span class="lab" aria-hidden="true">14</span><span class="vh">2014, 8 entries</span></a>
+      <a href="#y2015" data-counts='{"exhibitions":3,"talks":1,"conferences":1,"workshops":0,"recognition":0,"service":0}'><i style="height:56%"></i><span class="lab" aria-hidden="true">15</span><span class="vh">2015, 5 entries</span></a>
+      <a href="#y2016" data-counts='{"exhibitions":6,"talks":1,"conferences":0,"workshops":1,"recognition":1,"service":0}'><i style="height:100%"></i><span class="lab" aria-hidden="true">16</span><span class="vh">2016, 9 entries</span></a>
+      <a href="#y2017" data-counts='{"exhibitions":2,"talks":0,"conferences":1,"workshops":0,"recognition":0,"service":0}'><i style="height:33%"></i><span class="lab" aria-hidden="true">17</span><span class="vh">2017, 3 entries</span></a>
+      <a href="#y2018" data-counts='{"exhibitions":1,"talks":0,"conferences":0,"workshops":0,"recognition":0,"service":1}'><i style="height:22%"></i><span class="lab" aria-hidden="true">18</span><span class="vh">2018, 2 entries</span></a>
+      <a href="#y2019" data-counts='{"exhibitions":3,"talks":2,"conferences":0,"workshops":0,"recognition":0,"service":0}'><i style="height:56%"></i><span class="lab" aria-hidden="true">19</span><span class="vh">2019, 5 entries</span></a>
+      <a href="#y2020" data-counts='{"exhibitions":1,"talks":0,"conferences":0,"workshops":0,"recognition":0,"service":0}'><i style="height:11%"></i><span class="lab" aria-hidden="true">20</span><span class="vh">2020, 1 entry</span></a>
+      <a href="#y2021" data-counts='{"exhibitions":2,"talks":1,"conferences":0,"workshops":0,"recognition":0,"service":0}'><i style="height:33%"></i><span class="lab" aria-hidden="true">21</span><span class="vh">2021, 3 entries</span></a>
+      <a href="#y2022" data-counts='{"exhibitions":1,"talks":0,"conferences":0,"workshops":0,"recognition":0,"service":2}'><i style="height:33%"></i><span class="lab" aria-hidden="true">22</span><span class="vh">2022, 3 entries</span></a>
+      <a href="#y2023" class="empty" tabindex="-1" aria-hidden="true" data-counts='{"exhibitions":0,"talks":0,"conferences":0,"workshops":0,"recognition":0,"service":0}'><i style="height:0%"></i><span class="lab" aria-hidden="true">23</span><span class="vh">2023, 0 entries</span></a>
+      <a href="#y2024" class="empty" tabindex="-1" aria-hidden="true" data-counts='{"exhibitions":0,"talks":0,"conferences":0,"workshops":0,"recognition":0,"service":0}'><i style="height:0%"></i><span class="lab" aria-hidden="true">24</span><span class="vh">2024, 0 entries</span></a>
+    </nav>
+    <div class="cmd no-print" role="group" aria-label="Filter the record">
+      <span class="p"><b>$</b> make cv --only</span>
+      <button type="button" aria-pressed="true" data-f="all">all</button>
+      <button type="button" aria-pressed="false" data-f="exhibitions">exhibitions</button>
+      <button type="button" aria-pressed="false" data-f="talks">talks</button>
+      <button type="button" aria-pressed="false" data-f="conferences">conferences</button>
+      <button type="button" aria-pressed="false" data-f="workshops">workshops</button>
+      <button type="button" aria-pressed="false" data-f="recognition">recognition</button>
+      <button type="button" aria-pressed="false" data-f="service">service</button>
+      <output aria-live="polite">74 of 74</output>
+    </div>
+    <ol class="ledger">
+      <li id="now"><h3>now</h3><ul><li data-kind="teaching"><p class="tag">teaching</p><div><p class="t">Professor</p><p class="d">Eastern Washington University, Spokane, WA</p><p class="d">2024 <span class="sl">//</span> present</p></div></li><li data-kind="service"><p class="tag">service</p><div><p class="t">Consulting, Branding, Web Development</p><p class="d">website design, optimization, graphic design, technical consulting</p><p class="d">2008–present</p></div></li></ul></li>
+      <li id="y2022"><h3>2022<small>3 entries</small></h3><ul><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> invited</p><div><p class="t">Terrain Gallery Art Auction</p><p class="d">Terrain Gallery, Spokane, WA</p></div></li><li data-kind="service"><p class="tag">service</p><div><p class="t">Exhibition Juror</p><p class="d">Terrain 13, Spokane, WA</p><p class="d">2022, 2016, 2013, 2009</p></div></li><li data-kind="service"><p class="tag">service</p><div><p class="t">Board Member</p><p class="d">NewTech HS, Spokane, WA</p><p class="d">2019–2022</p></div></li></ul></li>
+      <li id="y2021"><h3>2021<small>3 entries</small></h3><ul><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> invited</p><div><p class="t">Terrain Gallery Art Auction</p><p class="d">Terrain Gallery, Spokane, WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> invited</p><div><p class="t">Return</p><p class="d">SFCC Fine Art Gallery, Spokane, WA</p></div></li><li data-kind="talks"><p class="tag">talk</p><div><p class="t">Online Artist Talk session via zoom</p><p class="d">Spokane Falls Community College</p><p class="d">Spokane, WA <span class="sl">//</span> 01/21</p></div></li></ul></li>
+      <li id="y2020"><h3>2020<small>1 entry</small></h3><ul><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> invited</p><div><p class="t">Art in the Time of Quarantine</p><p class="d">Terrain Gallery, Spokane, WA</p></div></li></ul></li>
+      <li id="y2019"><h3>2019<small>5 entries</small></h3><ul><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> juried</p><div><p class="t">Terrain 12</p><p class="d">Jensen-Byrd Building, Spokane, WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> invited</p><div><p class="t">Monster Drawing Rally</p><p class="d">Spokane, WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> invited</p><div><p class="t">Text and Response</p><p class="d">Saranac Art Projects, Spokane, WA</p></div></li><li data-kind="talks"><p class="tag">talk</p><div><p class="t">100 Years of Bauhaus - Panel Discussion</p><p class="d">Eastern Washington University</p><p class="d">Cheney, WA <span class="sl">//</span> 11/06</p></div></li><li data-kind="talks"><p class="tag">talk</p><div><p class="t">AR/VR Panel - Spokane UX Meetup</p><p class="d">Spark Central</p><p class="d">Spokane, WA <span class="sl">//</span> 06/27</p></div></li></ul></li>
+      <li id="y2018"><h3>2018<small>2 entries</small></h3><ul><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> juried</p><div><p class="t">Terrain 11</p><p class="d">Jensen-Byrd Building, Spokane, WA</p></div></li><li data-kind="service"><p class="tag">service</p><div><p class="t">Board Member</p><p class="d">Spokane Art School, Spokane, WA</p><p class="d">2017–2018</p></div></li></ul></li>
+      <li id="y2017"><h3>2017<small>3 entries</small></h3><ul><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> solo</p><div><p class="t">Kids Stuff</p><p class="d">Baby Bar, Spokane, WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> curated</p><div><p class="t">Monster Drawing Rally</p><p class="d">Spokane, WA</p></div></li><li data-kind="conferences"><p class="tag">conference</p><div><p class="t">Leveraging CIM to Operationalize Principles of Shared Governance</p><p class="d">Travis Masingale, Heather Veeder</p><p class="d">Leepfrog User Conference 2017, New Orleans, Louisiana</p><p class="d">February 28 – March 3, 2017</p></div></li></ul></li>
+      <li id="y2016"><h3>2016<small>9 entries</small></h3><ul><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> solo</p><div><p class="t">rALLy</p><p class="d">Terrain Gallery, Spokane, WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> solo</p><div><p class="t">the sun will also rist tomororw: reproduction and manufactured objectivity</p><p class="d">Darr Gallery, Spokane WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> group</p><div><p class="t">Faculty Art Exhibition</p><p class="d">EWU Gallery, Spokane, WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> group</p><div><p class="t">Drawn to the Wall VI</p><p class="d">Jundt Museum, Gonzaga University, Spokane, WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> group</p><div><p class="t">Black Mountain School Print Show</p><p class="d">Black Off Biltmore, Asheville, NC</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> group</p><div><p class="t">Spare Time</p><p class="d">Student Space Gallery, Cheney, WA</p><p class="d">EWU Faculty Exhibition</p></div></li><li data-kind="talks"><p class="tag">talk</p><div><p class="t">Building Your Brand</p><p class="d">Farm and Food Expo/Gonzaga University</p><p class="d">Spokane, WA <span class="sl">//</span> 11/5/16</p></div></li><li data-kind="workshops"><p class="tag">workshop</p><div><p class="t">Pedagogy</p><p class="d">Special edition zine, Black Mountain School, Asheville, NC</p></div></li><li data-kind="recognition"><p class="tag">recognition</p><div><p class="t">Adobe Education Leader</p></div></li></ul></li>
+      <li id="y2015"><h3>2015<small>5 entries</small></h3><ul><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> solo</p><div><p class="t">False Leads to Dead Ends</p><p class="d">Baby Bar, Spokane, WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> curated</p><div><p class="t">Small Towns</p><p class="d">Student Space Gallery, Cheney, WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> curated</p><div><p class="t">Small Towns</p><p class="d">Tinman Gallery, Spokane, WA</p></div></li><li data-kind="talks"><p class="tag">talk</p><div><p class="t">Black Mountain School Reboot</p><p class="d">Curriculum Planning Session, Camp Rockmont</p><p class="d">Black Mountain, NC <span class="sl">//</span> 10/02 – 10/04</p></div></li><li data-kind="conferences"><p class="tag">conference</p><div><p class="t">Keep Calm and Carry On: Provoking Emotion in the Classroom</p><p class="d">Callie Spencer Schultz, Travis Masingale, Jeremy Schultz, Sean Agriss, Ben Meredith, Mindy Breen</p><p class="d">Provoking Curriculum Studies Conference, Vancouver, Canada</p><p class="d">February 20 – 21, 2015</p></div></li></ul></li>
+      <li id="y2014"><h3>2014<small>8 entries</small></h3><ul><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> solo</p><div><p class="t">Foundations</p><p class="d">Tinman Gallery, Spokane, WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> group</p><div><p class="t">Halftone</p><p class="d">Luxe Ballroom, Spokane, WA</p></div></li><li data-kind="talks"><p class="tag">talk</p><div><p class="t">Visual Communication Design</p><p class="d">An Overview for International Students, Office of Global Initiatives, Eastern Washington University</p><p class="d">Cheney, WA <span class="sl">//</span> 07/23</p></div></li><li data-kind="talks"><p class="tag">talk</p><div><p class="t">Drawing for Communication</p><p class="d">MLK International Students of Color Symposium, Eastern Washington University</p><p class="d">Cheney, WA <span class="sl">//</span> 07/22</p></div></li><li data-kind="talks"><p class="tag">talk</p><div><p class="t">Pedagogy and Philosophy</p><p class="d">Maryland Institute College of Art</p><p class="d">Baltimore, MD <span class="sl">//</span> 05/05 – 05/07</p></div></li><li data-kind="conferences"><p class="tag">conference</p><div><p class="t">Intersections in Creativity</p><p class="d">Breen, M., Masingale T.</p><p class="d">Panel at New Ventures: Intersections in Design Education, AIGA Design Educators Conference, Portland, OR</p><p class="d">September 11 - 13, 2014</p></div></li><li data-kind="conferences"><p class="tag">conference</p><div><p class="t">Fostering Creativity Through Play</p><p class="d">Breen, M., Masingale T.</p><p class="d">Presentation at New Ventures: Intersections in Design Education, AIGA Design Educators Conference, Portland, OR</p><p class="d">September 11 - 13, 2014</p></div></li><li data-kind="workshops"><p class="tag">workshop</p><div><p class="t">Social Media in the Classroom</p><p class="d">Teaching and Technology Bootcamp, Eastern Washington University, Cheney, WA</p></div></li></ul></li>
+      <li id="y2013"><h3>2013<small>4 entries</small></h3><ul><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> juried</p><div><p class="t">Prime</p><p class="d">Saranac Art Gallery, Spokane, WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> juried</p><div><p class="t">Phone Ography</p><p class="d">Firehouse Art Center, Longmont, CO</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> group</p><div><p class="t">Faculty Art Exhibition</p><p class="d">EWU Gallery, Spokane, WA</p></div></li><li data-kind="talks"><p class="tag">talk</p><div><p class="t">Pedagogy and Philosophy</p><p class="d">tele-lecture, Maryland Institute College of Art</p><p class="d">Baltimore, MD <span class="sl">//</span> 02/6</p></div></li></ul></li>
+      <li id="y2012"><h3>2012<small>9 entries</small></h3><ul><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> solo</p><div><p class="t">More Meta</p><p class="d">Elk Public House, Spokane, WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> solo</p><div><p class="t">Metadata</p><p class="d">Coeur Coffee House, Spokane, WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> solo</p><div><p class="t">Topological Slopism</p><p class="d">Decker Gallery, Spokane, WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> juried</p><div><p class="t">Ontological Accidents</p><p class="d">Student Space Gallery, Maryland Institute College of Art, Baltimore, MD</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> invited</p><div><p class="t">The Strip Show 10x10</p><p class="d">SFCC Fine Art Gallery, Spokane, WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> group</p><div><p class="t">MFA Candidate Show</p><p class="d">Maryland Institute College of Art, Baltimore, MD</p></div></li><li data-kind="workshops"><p class="tag">workshop</p><div><p class="t">Computer Security</p><p class="d">Graduate Research Lab, Maryland Institute College of Art, Baltimore, MD</p></div></li><li data-kind="workshops"><p class="tag">workshop</p><div><p class="t">Projection Mapping</p><p class="d">Maryland Institute College of Art, Baltimore, MD</p></div></li><li data-kind="recognition"><p class="tag">recognition</p><div><p class="t">Certificate in College Teaching of Art</p></div></li></ul></li>
+      <li id="y2011"><h3>2011<small>6 entries</small></h3><ul><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> solo</p><div><p class="t">They're All Going to Laugh at You</p><p class="d">Gravity Gallery, Maryland Institute College of Art, Baltimore, MD</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> solo</p><div><p class="t">Can You Hear Me Now?</p><p class="d">Gravity Gallery, Maryland Institute College of Art, Baltimore, MD</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> group</p><div><p class="t">PEM Fall Show</p><p class="d">Maryland Institute College of Art, Baltimore, MD</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> group</p><div><p class="t">Suggested Upgrades</p><p class="d">City Arts Gallery, Baltimore, MD</p></div></li><li data-kind="workshops"><p class="tag">workshop</p><div><p class="t">Programming for Artists</p><p class="d">Graduate Research Lab, Maryland Institute College of Art, Baltimore, MD</p></div></li><li data-kind="workshops"><p class="tag">workshop</p><div><p class="t">Basic Web development</p><p class="d">Graduate Research Lab, Maryland Institute College of Art, Baltimore, MD</p></div></li></ul></li>
+      <li id="y2010"><h3>2010<small>2 entries</small></h3><ul><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> solo</p><div><p class="t">No Reservations</p><p class="d">The Globe, Spokane, WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> group</p><div><p class="t">PEM Fall Show</p><p class="d">Maryland Institute College of Art, Baltimore, MD</p></div></li></ul></li>
+      <li id="y2009"><h3>2009<small>3 entries</small></h3><ul><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> solo</p><div><p class="t">Changing Resolutions</p><p class="d">The Baby Bar, Spokane, WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> invited</p><div><p class="t">Intoxicated Dreams of Youth Year Three</p><p class="d">Spokane, WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> group</p><div><p class="t">Group Show</p><p class="d">Baby Bar, Spokane, WA</p></div></li></ul></li>
+      <li id="y2008"><h3>2008<small>3 entries</small></h3><ul><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> juried</p><div><p class="t">Terrain 2008</p><p class="d">Terrain, Spokane, WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> group</p><div><p class="t">Devolve</p><p class="d">Far West Billiards, Spokane, WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> curated</p><div><p class="t">Intoxicated Dreams of Youth, year 2</p><p class="d">Spokane, WA</p></div></li></ul></li>
+      <li id="y2007"><h3>2007<small>2 entries</small></h3><ul><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> solo</p><div><p class="t">100 Pieces of Me</p><p class="d">Prago Argentine Cafe, Spokane WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> curated</p><div><p class="t">Intoxicated Dreams of Youth</p><p class="d">Spokane, WA</p></div></li></ul></li>
+      <li id="y2006"><h3>2006<small>1 entry</small></h3><ul><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> group</p><div><p class="t">Group Exhibition</p><p class="d">The Spread, Spokane WA</p></div></li></ul></li>
+      <li id="y2004"><h3>2004<small>2 entries</small></h3><ul><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> solo</p><div><p class="t">Calibrating the Eye for Beauty</p><p class="d">Baby Bar, Spokane, WA</p></div></li><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> group</p><div><p class="t">17 Beginnings</p><p class="d">Brewster Hall, Cheney, WA</p><p class="d">Capstone Exhibition</p></div></li></ul></li>
+      <li id="y2001"><h3>2001<small>2 entries</small></h3><ul><li data-kind="exhibitions"><p class="tag">exhibition <span class="sl">//</span> group</p><div><p class="t">Group Exhibition</p><p class="d">Crawford Gallery, Deer Park, WA</p></div></li><li data-kind="recognition"><p class="tag">recognition</p><div><p class="t">Featured in student publication &quot;The Wire Harp&quot;</p></div></li></ul></li>
+    </ol>
+  </section>
+</main>
+<footer class="footer">
+  <div class="wrap">
+    <p><strong>travis masingale <span class="sl">//</span> iamsivart</strong><br>a specialist in obscure details. &copy; 2026</p>
+    <nav aria-label="Contact" class="no-print"><a href="https://github.com/sicxz">github <span class="sl">//</span> sicxz</a><a href="#">email <span class="sl">//</span> placeholder</a><a href="#top">back to top</a></nav>
+  </div>
+</footer>
+<script>
+// Filtering is an enhancement: with no script, the full record shows.
+const max = 9;
+const buttons = [...document.querySelectorAll('.cmd button')];
+const out = document.querySelector('.cmd output');
+const blocks = [...document.querySelectorAll('.ledger > li')];
+const bars = [...document.querySelectorAll('.strip a')];
+const all = document.querySelectorAll('.ledger li[data-kind]:not([data-kind="teaching"])').length;
+buttons.forEach(b => b.addEventListener('click', () => {
+  const f = b.dataset.f;
+  buttons.forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  let n = 0;
+  blocks.forEach(block => {
+    let shown = 0, last;
+    block.querySelectorAll('li[data-kind]').forEach(li => {
+      li.hidden = f !== 'all' && li.dataset.kind !== f;
+      li.classList.remove('last');
+      if (!li.hidden) { shown++; last = li; if (li.dataset.kind !== 'teaching') n++; }
+    });
+    if (last) last.classList.add('last');
+    block.hidden = shown === 0;
+    const small = block.querySelector('h3 small');
+    if (small) small.textContent = shown + (shown === 1 ? ' entry' : ' entries');
+  });
+  bars.forEach(a => {
+    const c = JSON.parse(a.dataset.counts);
+    const v = f === 'all' ? Object.values(c).reduce((s, x) => s + x, 0) : c[f];
+    a.querySelector('i').style.height = Math.round(v / max * 100) + '%';
+    a.classList.toggle('empty', v === 0);
+  });
+  out.textContent = n + ' of ' + all;
+}));
+</script>
+</body>
+</html>

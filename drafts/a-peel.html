@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>travis masingale // iamsivart (draft A)</title>
+<meta name="description" content="Travis Masingale. Professor at Eastern Washington University. CV: teaching, talks, exhibitions and service.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Tokens lifted from the DESN 368 light theme (fall2026.css) */
+:root {
+  --ink: #172128;
+  --paper: #f5f7f8;
+  --brick: #b8392d;
+  --blue: #09627b;
+  --line: #c9d1d5;
+  --sun: #efc55b;
+  --muted: #4b5961;
+  --shade: #d0dadf;
+  --panel: #1d2e36;
+  --sans: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'DM Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.65 var(--sans); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p, ul, ol, table { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+h1, h2, h3 { line-height: 1.12; letter-spacing: -.035em; text-transform: lowercase; }
+a { color: var(--blue); text-underline-offset: .2em; text-decoration-thickness: 1px; }
+a:hover { color: var(--brick); }
+:focus-visible { outline: 3px solid #0756d4; outline-offset: 4px; }
+.sl { font-family: var(--mono); font-weight: 400; letter-spacing: 0; color: var(--brick); }
+.y .sl, .d .sl, .m .sl { color: inherit; }
+.nw { white-space: nowrap; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.wordmark { display: inline-block; padding: 14px 0; }
+.skip { position: absolute; top: -80px; left: 20px; z-index: 20; padding: 12px; background: #fff; color: var(--ink); }
+.skip:focus { top: 12px; }
+.button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 21px; border: 2px solid var(--ink); border-radius: 3px; background: var(--ink); color: #fff; font: 600 16px/1.2 var(--sans); text-decoration: none; cursor: pointer; }
+.button:hover { background: var(--brick); border-color: var(--brick); color: #fff; }
+.button.secondary { background: transparent; color: var(--ink); }
+.button.secondary:hover { color: #fff; }
+.y { font: 13px/1.9 var(--mono); color: var(--muted); white-space: nowrap; }
+.t { font-weight: 600; font-size: 18px; line-height: 1.35; }
+.d { font-size: 15px; line-height: 1.5; color: var(--muted); }
+.m { font-size: 14px; line-height: 1.5; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+@media print {
+  body { background: #fff; font-size: 10.5pt; }
+  .no-print { display: none !important; }
+  a { color: inherit; text-decoration: none; }
+  li, tr { break-inside: avoid; }
+  h2, h3 { break-after: avoid; }
+  .t { font-size: 10.5pt; }
+  .d, .m { font-size: 9pt; }
+  .y, .tag { font-size: 8pt; line-height: 1.8; }
+}
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 40px; }
+.topbar { position: sticky; top: 0; z-index: 5; background: var(--paper); border-bottom: 1px solid var(--line); }
+.topbar .wrap { display: flex; align-items: center; gap: 24px; min-height: 68px; }
+.wordmark { font: 500 17px/1 var(--mono); color: var(--ink); text-decoration: none; white-space: nowrap; }
+.wordmark span { color: var(--brick); margin-right: 6px; }
+.topbar nav { display: flex; gap: 22px; margin-left: auto; font-size: 15px; }
+.topbar nav a { padding: 12px 0 9px; border-bottom: 3px solid transparent; color: var(--ink); text-decoration: none; }
+.topbar nav a:hover, .topbar nav a[aria-current] { border-bottom-color: var(--brick); color: var(--ink); }
+
+.hero { display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; gap: 64px; padding: 72px 0 60px; }
+.eyebrow { font-size: 15px; font-weight: 600; color: var(--brick); }
+.hero h1 { margin: 18px 0 26px; font-size: clamp(54px, 7.4vw, 104px); line-height: .94; letter-spacing: -.065em; }
+.intro { max-width: 40ch; font-size: 21px; line-height: 1.5; }
+.button-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0; }
+.hero-meta { padding-left: 14px; border-left: 3px solid var(--brick); font-size: 15px; }
+
+.art { position: relative; min-height: 390px; overflow: hidden; background: var(--panel); color: #c9eced; box-shadow: 16px 16px 0 var(--shade); transform: rotate(1deg); }
+.art code { position: absolute; left: 30px; bottom: 20px; font: 15px/2 var(--mono); }
+.art code i { font-style: normal; color: var(--sun); }
+.sheet { position: absolute; inset: 0 0 105px 0; padding: 45px 30px; background: var(--sun); color: var(--ink); clip-path: polygon(0 0, 100% 0, 100% 62%, 69% 100%, 0 100%); }
+.sheet .swatch { display: block; width: 48px; height: 8px; margin-bottom: 18px; background: var(--brick); }
+.sheet b { display: block; max-width: 9ch; font-size: 50px; line-height: 1.02; letter-spacing: -.06em; }
+.sheet small { display: block; margin-top: 16px; font-size: 15px; }
+.fold { position: absolute; right: 0; bottom: 105px; width: 31%; height: 120px; background: #fbe8aa; clip-path: polygon(0 100%, 100% 0, 0 0); }
+
+.facts { display: flex; flex-wrap: wrap; gap: 20px 48px; padding: 18px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font-size: 15px; }
+.facts strong { display: block; }
+
+.group { padding-top: 80px; scroll-margin-top: 40px; }
+.group > .heading { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+.group h2 { font-size: clamp(32px, 3.6vw, 46px); letter-spacing: -.045em; }
+.jump { font: 13px/2 var(--mono); color: var(--muted); text-align: right; }
+.jump a { color: var(--ink); }
+.sub { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 12px 48px; padding: 26px 0 30px; border-top: 1px solid var(--line); scroll-margin-top: 80px; }
+.sub > header { position: sticky; top: 92px; align-self: start; }
+.sub h3 { font-size: 20px; line-height: 1.25; letter-spacing: -.025em; }
+.sub .n { margin-top: 6px; font: 13px/1.6 var(--mono); color: var(--muted); }
+.rows li { display: grid; grid-template-columns: 128px minmax(0, 1fr) minmax(0, 270px); gap: 2px 24px; align-items: start; padding: 15px 0; border-bottom: 1px solid var(--line); }
+.rows li:first-child { padding-top: 0; }
+.rows li:last-child { padding-bottom: 0; border-bottom: 0; }
+.rows .d { margin-top: 4px; }
+.rows .m { padding-top: 3px; text-align: right; }
+.rows.plain li { grid-template-columns: minmax(0, 1fr) minmax(0, 230px); }
+.rows.compact li { grid-template-columns: 128px minmax(0, 1fr) minmax(0, 1fr); padding: 11px 0; }
+.rows.compact .t { font-size: 17px; }
+.rows.compact .d { margin-top: 0; padding-top: 2px; }
+.areas { max-width: 34ch; font-size: 23px; font-weight: 600; line-height: 1.5; letter-spacing: -.02em; }
+.mono { font-family: var(--mono); font-size: 13px; }
+
+.footer { margin-top: 96px; border-top: 1px solid var(--line); font-size: 14px; }
+.footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; padding-top: 30px; padding-bottom: 40px; }
+.footer nav { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+.footer nav a { padding: 10px 0; }
+
+@media screen and (max-width: 860px) {
+  .wrap { padding: 0 20px; }
+  .topbar { position: static; }
+  .topbar .wrap { flex-wrap: wrap; gap: 0 20px; padding-top: 14px; }
+  .topbar nav { width: 100%; margin: 0; gap: 20px; }
+  .topbar nav a { padding: 14px 0 11px; }
+  .hero { grid-template-columns: 1fr; gap: 36px; padding: 40px 0 48px; }
+  .art { min-height: 300px; margin-right: 12px; box-shadow: 10px 10px 0 var(--shade); }
+  .sheet { padding: 26px 24px; }
+  .sheet b { font-size: 38px; }
+  .sheet small { margin-top: 10px; }
+  .fold { height: 74px; }
+  .group { padding-top: 56px; }
+  .group > .heading { display: block; }
+  .jump { text-align: left; margin-top: 8px; }
+  .jump a { display: inline-block; padding: 8px 0; }
+  .sub { grid-template-columns: 1fr; }
+  .sub > header { position: static; margin-bottom: 8px; }
+  .rows li, .rows.compact li, .rows.plain li { grid-template-columns: 1fr; gap: 0; }
+  .rows .m { text-align: left; }
+  .areas { font-size: 20px; }
+}
+@media print {
+  .topbar, .art, .button-row { display: none; }
+  .hero { display: block; padding: 0 0 16pt; }
+  .hero h1 { font-size: 30pt; margin: 6pt 0 10pt; }
+  .intro { font-size: 12pt; }
+  .facts { gap: 8pt 24pt; padding: 8pt 0; font-size: 9pt; }
+  .group { padding-top: 18pt; }
+  .group > .heading { margin-bottom: 8pt; }
+  .group h2 { font-size: 18pt; }
+  .sub { display: block; padding: 8pt 0; }
+  .sub > header { position: static; margin-bottom: 4pt; }
+  .sub h3 { font-size: 10.5pt; }
+  .sub .n { font-size: 8pt; }
+  .rows li { grid-template-columns: 70pt 1fr auto; gap: 0 12pt; padding: 4pt 0; }
+  .rows.compact li { grid-template-columns: 70pt 1fr 1fr; padding: 3pt 0; }
+  .rows.plain li { grid-template-columns: 1fr auto; }
+  .rows.compact .t { font-size: 10pt; }
+  .areas { max-width: none; font-size: 11pt; }
+  .footer { margin-top: 18pt; font-size: 8pt; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar no-print">
+  <div class="wrap">
+    <a class="wordmark" href="#top"><span>$</span>make cv</a>
+    <nav aria-label="Sections"><a href="#teaching">teaching</a><a href="#speaking">speaking</a><a href="#exhibitions">exhibitions</a><a href="#service">service</a></nav>
+  </div>
+</header>
+<main id="main" class="wrap">
+  <section class="hero" id="top">
+    <div>
+      <p class="eyebrow">professor @ eastern washington university</p>
+      <h1>travis<br>masingale</h1>
+      <p class="intro">I teach and make work across remix, digital photography, emergent design, typography, electronic media, packaging design, semiotics and design theory.</p>
+      <div class="button-row"><a class="button" href="#teaching">read the cv</a><button class="button secondary" type="button" onclick="window.print()">print or save as pdf</button></div>
+      <p class="hero-meta">2022–23 <span class="sl">//</span> sabbatical researching computational design and photography</p>
+    </div>
+    <div class="art" role="img" aria-label="A yellow sheet reading “specialist in obscure details” peels back from a dark terminal that reads: make cv, 83 entries, 2001 to 2024.">
+      <code>$ make cv<br><i>✓</i> 83 entries // 2001–2024</code>
+      <div class="sheet"><span class="swatch"></span><b>specialist in obscure details.</b><small>professional learner // iamsivart</small></div>
+      <div class="fold"></div>
+    </div>
+  </section>
+
+  <div class="facts">
+    <div><strong>Professor</strong>Eastern Washington University, 2024–present</div>
+    <div><strong>M.F.A.</strong>Maryland Institute College of Art, 2012</div>
+    <div><strong>48 exhibitions</strong>14 solo, 2001–2022</div>
+    <div><strong>Spokane, WA</strong><a href="https://github.com/sicxz">github <span class="sl">//</span> sicxz</a> &nbsp; <a href="#">email <span class="sl">//</span> placeholder</a></div>
+  </div>
+
+  <section class="group" id="teaching">
+    <div class="heading"><h2>teaching</h2></div>
+    <div class="sub"><header><h3>positions</h3></header><ul class="rows "><li><span class="y">2024 <span class="sl">//</span> present</span><div><p class="t">Professor</p><p class="d">Eastern Washington University, Spokane, WA</p></div></li><li><span class="y">2018 <span class="sl">//</span> 2024</span><div><p class="t">Associate Professor</p><p class="d">Eastern Washington University, Spokane, WA</p></div></li><li><span class="y">2012 <span class="sl">//</span> 2018</span><div><p class="t">Assistant Professor</p><p class="d">Eastern Washington University, Cheney, WA</p></div></li><li><span class="y">2010 <span class="sl">//</span> 2012</span><div><p class="t">Graduate Teaching Intern</p><p class="d">Maryland Institute College of Art, Baltimore, MD</p></div></li><li><span class="y">2009 <span class="sl">//</span> 2010</span><div><p class="t">Adjunct Faculty</p><p class="d">Eastern Washington University, Cheney, WA</p></div></li><li><span class="y">2009 <span class="sl">//</span> 2010</span><div><p class="t">Substitute Faculty</p><p class="d">Eastern Washington University, Cheney WA</p></div></li></ul></div>
+    <div class="sub"><header><h3>education</h3></header><ul class="rows "><li><time class="y" datetime="2012">2012</time><div><p class="t">M.F.A. Photographic and Electronic Media</p><p class="d">Maryland Institute College of Art, Baltimore, MD</p></div></li><li><time class="y" datetime="2004">2004</time><div><p class="t">B.A. Visual Communication Design<br>B.A. Fine Art (studio)</p><p class="d">Eastern Washington University, Cheney, WA</p></div></li><li><time class="y" datetime="2001">2001</time><div><p class="t">Associates of Fine Art</p><p class="d">Spokane Falls Community College, Spokane, WA</p></div></li></ul></div>
+    <div class="sub"><header><h3>areas of interest and teaching</h3></header><p class="areas"><span class="nw">Remix <span class="sl">//</span></span> <span class="nw">Digital Photography <span class="sl">//</span></span> <span class="nw">Emergent Design <span class="sl">//</span></span> <span class="nw">Typography <span class="sl">//</span></span> <span class="nw">Electronic Media <span class="sl">//</span></span> <span class="nw">Packaging Design <span class="sl">//</span></span> <span class="nw">Semiotics <span class="sl">//</span></span> Design Theory</p></div>
+  </section>
+
+  <section class="group" id="speaking">
+    <div class="heading"><h2>speaking</h2></div>
+    <div class="sub"><header><h3>conferences</h3><p class="n">papers, presentations and moderation</p></header><ul class="rows "><li><time class="y" datetime="2017">2017</time><div><p class="t">Leveraging CIM to Operationalize Principles of Shared Governance</p><p class="d">Travis Masingale, Heather Veeder<br>Leepfrog User Conference 2017, New Orleans, Louisiana</p></div><p class="m">February 28 – March 3, 2017</p></li><li><time class="y" datetime="2015">2015</time><div><p class="t">Keep Calm and Carry On: Provoking Emotion in the Classroom</p><p class="d">Callie Spencer Schultz, Travis Masingale, Jeremy Schultz, Sean Agriss, Ben Meredith, Mindy Breen<br>Provoking Curriculum Studies Conference, Vancouver, Canada</p></div><p class="m">February 20 – 21, 2015</p></li><li><time class="y" datetime="2014">2014</time><div><p class="t">Intersections in Creativity</p><p class="d">Breen, M., Masingale T.<br>Panel at New Ventures: Intersections in Design Education, AIGA Design Educators Conference, Portland, OR</p></div><p class="m">September 11 - 13, 2014</p></li><li><time class="y" datetime="2014">2014</time><div><p class="t">Fostering Creativity Through Play</p><p class="d">Breen, M., Masingale T.<br>Presentation at New Ventures: Intersections in Design Education, AIGA Design Educators Conference, Portland, OR</p></div><p class="m">September 11 - 13, 2014</p></li></ul></div>
+    <div class="sub"><header><h3>invited talks &amp; panels</h3></header><ul class="rows "><li><time class="y" datetime="2021">2021</time><div><p class="t">Online Artist Talk session via zoom</p><p class="d">Spokane Falls Community College</p></div><p class="m">Spokane, WA <span class="sl">//</span> 01/21</p></li><li><time class="y" datetime="2019">2019</time><div><p class="t">100 Years of Bauhaus - Panel Discussion</p><p class="d">Eastern Washington University</p></div><p class="m">Cheney, WA <span class="sl">//</span> 11/06</p></li><li><time class="y" datetime="2019">2019</time><div><p class="t">AR/VR Panel - Spokane UX Meetup</p><p class="d">Spark Central</p></div><p class="m">Spokane, WA <span class="sl">//</span> 06/27</p></li><li><time class="y" datetime="2016">2016</time><div><p class="t">Building Your Brand</p><p class="d">Farm and Food Expo/Gonzaga University</p></div><p class="m">Spokane, WA <span class="sl">//</span> 11/5/16</p></li><li><time class="y" datetime="2015">2015</time><div><p class="t">Black Mountain School Reboot</p><p class="d">Curriculum Planning Session, Camp Rockmont</p></div><p class="m">Black Mountain, NC <span class="sl">//</span> 10/02 – 10/04</p></li><li><time class="y" datetime="2014">2014</time><div><p class="t">Visual Communication Design</p><p class="d">An Overview for International Students, Office of Global Initiatives, Eastern Washington University</p></div><p class="m">Cheney, WA <span class="sl">//</span> 07/23</p></li><li><time class="y" datetime="2014">2014</time><div><p class="t">Drawing for Communication</p><p class="d">MLK International Students of Color Symposium, Eastern Washington University</p></div><p class="m">Cheney, WA <span class="sl">//</span> 07/22</p></li><li><time class="y" datetime="2014">2014</time><div><p class="t">Pedagogy and Philosophy</p><p class="d">Maryland Institute College of Art</p></div><p class="m">Baltimore, MD <span class="sl">//</span> 05/05 – 05/07</p></li><li><time class="y" datetime="2013">2013</time><div><p class="t">Pedagogy and Philosophy</p><p class="d">tele-lecture, Maryland Institute College of Art</p></div><p class="m">Baltimore, MD <span class="sl">//</span> 02/6</p></li></ul></div>
+    <div class="sub"><header><h3>practicums &amp; workshops</h3></header><ul class="rows "><li><time class="y" datetime="2016">2016</time><div><p class="t">Pedagogy</p><p class="d">Special edition zine, Black Mountain School</p></div><p class="m">Asheville, NC</p></li><li><time class="y" datetime="2014">2014</time><div><p class="t">Social Media in the Classroom</p><p class="d">Teaching and Technology Bootcamp, Eastern Washington University</p></div><p class="m">Cheney, WA</p></li><li><time class="y" datetime="2012">2012</time><div><p class="t">Computer Security</p><p class="d">Graduate Research Lab, Maryland Institute College of Art</p></div><p class="m">Baltimore, MD</p></li><li><time class="y" datetime="2012">2012</time><div><p class="t">Projection Mapping</p><p class="d">Maryland Institute College of Art</p></div><p class="m">Baltimore, MD</p></li><li><time class="y" datetime="2011">2011</time><div><p class="t">Programming for Artists</p><p class="d">Graduate Research Lab, Maryland Institute College of Art</p></div><p class="m">Baltimore, MD</p></li><li><time class="y" datetime="2011">2011</time><div><p class="t">Basic Web development</p><p class="d">Graduate Research Lab, Maryland Institute College of Art</p></div><p class="m">Baltimore, MD</p></li></ul></div>
+  </section>
+
+  <section class="group" id="exhibitions">
+    <div class="heading"><h2>exhibitions</h2><p class="jump no-print"><a href="#ex-solo">solo 14</a> <span class="sl">//</span> <a href="#ex-juried">juried 6</a> <span class="sl">//</span> <a href="#ex-invited">invited 8</a> <span class="sl">//</span> <a href="#ex-group">group 15</a> <span class="sl">//</span> <a href="#ex-curated">curated 5</a></p></div>
+    <div class="sub" id="ex-solo"><header><h3>solo exhibitions &amp; interactions</h3><p class="n">14</p></header><ul class="rows compact"><li><time class="y" datetime="2017">2017</time><p class="t">Kids Stuff</p><p class="d">Baby Bar, Spokane, WA</p></li><li><time class="y" datetime="2016">2016</time><p class="t">rALLy</p><p class="d">Terrain Gallery, Spokane, WA</p></li><li><time class="y" datetime="2016">2016</time><p class="t">the sun will also rist tomororw: reproduction and manufactured objectivity</p><p class="d">Darr Gallery, Spokane WA</p></li><li><time class="y" datetime="2015">2015</time><p class="t">False Leads to Dead Ends</p><p class="d">Baby Bar, Spokane, WA</p></li><li><time class="y" datetime="2014">2014</time><p class="t">Foundations</p><p class="d">Tinman Gallery, Spokane, WA</p></li><li><time class="y" datetime="2012">2012</time><p class="t">More Meta</p><p class="d">Elk Public House, Spokane, WA</p></li><li><time class="y" datetime="2012">2012</time><p class="t">Metadata</p><p class="d">Coeur Coffee House, Spokane, WA</p></li><li><time class="y" datetime="2012">2012</time><p class="t">Topological Slopism</p><p class="d">Decker Gallery, Spokane, WA</p></li><li><time class="y" datetime="2011">2011</time><p class="t">They're All Going to Laugh at You</p><p class="d">Gravity Gallery, Maryland Institute College of Art, Baltimore, MD</p></li><li><time class="y" datetime="2011">2011</time><p class="t">Can You Hear Me Now?</p><p class="d">Gravity Gallery, Maryland Institute College of Art, Baltimore, MD</p></li><li><time class="y" datetime="2010">2010</time><p class="t">No Reservations</p><p class="d">The Globe, Spokane, WA</p></li><li><time class="y" datetime="2009">2009</time><p class="t">Changing Resolutions</p><p class="d">The Baby Bar, Spokane, WA</p></li><li><time class="y" datetime="2007">2007</time><p class="t">100 Pieces of Me</p><p class="d">Prago Argentine Cafe, Spokane WA</p></li><li><time class="y" datetime="2004">2004</time><p class="t">Calibrating the Eye for Beauty</p><p class="d">Baby Bar, Spokane, WA</p></li></ul></div><div class="sub" id="ex-juried"><header><h3>juried exhibitions</h3><p class="n">6</p></header><ul class="rows compact"><li><time class="y" datetime="2019">2019</time><p class="t">Terrain 12</p><p class="d">Jensen-Byrd Building, Spokane, WA</p></li><li><time class="y" datetime="2018">2018</time><p class="t">Terrain 11</p><p class="d">Jensen-Byrd Building, Spokane, WA</p></li><li><time class="y" datetime="2013">2013</time><p class="t">Prime</p><p class="d">Saranac Art Gallery, Spokane, WA</p></li><li><time class="y" datetime="2013">2013</time><p class="t">Phone Ography</p><p class="d">Firehouse Art Center, Longmont, CO</p></li><li><time class="y" datetime="2012">2012</time><p class="t">Ontological Accidents</p><p class="d">Student Space Gallery, Maryland Institute College of Art, Baltimore, MD</p></li><li><time class="y" datetime="2008">2008</time><p class="t">Terrain 2008</p><p class="d">Terrain, Spokane, WA</p></li></ul></div><div class="sub" id="ex-invited"><header><h3>invited exhibitions</h3><p class="n">8</p></header><ul class="rows compact"><li><time class="y" datetime="2022">2022</time><p class="t">Terrain Gallery Art Auction</p><p class="d">Terrain Gallery, Spokane, WA</p></li><li><time class="y" datetime="2021">2021</time><p class="t">Terrain Gallery Art Auction</p><p class="d">Terrain Gallery, Spokane, WA</p></li><li><time class="y" datetime="2021">2021</time><p class="t">Return</p><p class="d">SFCC Fine Art Gallery, Spokane, WA</p></li><li><time class="y" datetime="2020">2020</time><p class="t">Art in the Time of Quarantine</p><p class="d">Terrain Gallery, Spokane, WA</p></li><li><time class="y" datetime="2019">2019</time><p class="t">Monster Drawing Rally</p><p class="d">Spokane, WA</p></li><li><time class="y" datetime="2019">2019</time><p class="t">Text and Response</p><p class="d">Saranac Art Projects, Spokane, WA</p></li><li><time class="y" datetime="2012">2012</time><p class="t">The Strip Show 10x10</p><p class="d">SFCC Fine Art Gallery, Spokane, WA</p></li><li><time class="y" datetime="2009">2009</time><p class="t">Intoxicated Dreams of Youth Year Three</p><p class="d">Spokane, WA</p></li></ul></div><div class="sub" id="ex-group"><header><h3>group exhibitions</h3><p class="n">15</p></header><ul class="rows compact"><li><time class="y" datetime="2016">2016</time><p class="t">Faculty Art Exhibition</p><p class="d">EWU Gallery, Spokane, WA</p></li><li><time class="y" datetime="2016">2016</time><p class="t">Drawn to the Wall VI</p><p class="d">Jundt Museum, Gonzaga University, Spokane, WA</p></li><li><time class="y" datetime="2016">2016</time><p class="t">Black Mountain School Print Show</p><p class="d">Black Off Biltmore, Asheville, NC</p></li><li><time class="y" datetime="2016">2016</time><p class="t">Spare Time</p><p class="d">Student Space Gallery, Cheney, WA<br>EWU Faculty Exhibition</p></li><li><time class="y" datetime="2014">2014</time><p class="t">Halftone</p><p class="d">Luxe Ballroom, Spokane, WA</p></li><li><time class="y" datetime="2013">2013</time><p class="t">Faculty Art Exhibition</p><p class="d">EWU Gallery, Spokane, WA</p></li><li><time class="y" datetime="2012">2012</time><p class="t">MFA Candidate Show</p><p class="d">Maryland Institute College of Art, Baltimore, MD</p></li><li><time class="y" datetime="2011">2011</time><p class="t">PEM Fall Show</p><p class="d">Maryland Institute College of Art, Baltimore, MD</p></li><li><time class="y" datetime="2011">2011</time><p class="t">Suggested Upgrades</p><p class="d">City Arts Gallery, Baltimore, MD</p></li><li><time class="y" datetime="2010">2010</time><p class="t">PEM Fall Show</p><p class="d">Maryland Institute College of Art, Baltimore, MD</p></li><li><time class="y" datetime="2009">2009</time><p class="t">Group Show</p><p class="d">Baby Bar, Spokane, WA</p></li><li><time class="y" datetime="2008">2008</time><p class="t">Devolve</p><p class="d">Far West Billiards, Spokane, WA</p></li><li><time class="y" datetime="2006">2006</time><p class="t">Group Exhibition</p><p class="d">The Spread, Spokane WA</p></li><li><time class="y" datetime="2004">2004</time><p class="t">17 Beginnings</p><p class="d">Brewster Hall, Cheney, WA<br>Capstone Exhibition</p></li><li><time class="y" datetime="2001">2001</time><p class="t">Group Exhibition</p><p class="d">Crawford Gallery, Deer Park, WA</p></li></ul></div><div class="sub" id="ex-curated"><header><h3>curated exhibitions <span class="sl">//</span> projects</h3><p class="n">5</p></header><ul class="rows compact"><li><time class="y" datetime="2017">2017</time><p class="t">Monster Drawing Rally</p><p class="d">Spokane, WA</p></li><li><time class="y" datetime="2015">2015</time><p class="t">Small Towns</p><p class="d">Student Space Gallery, Cheney, WA</p></li><li><time class="y" datetime="2015">2015</time><p class="t">Small Towns</p><p class="d">Tinman Gallery, Spokane, WA</p></li><li><time class="y" datetime="2008">2008</time><p class="t">Intoxicated Dreams of Youth, year 2</p><p class="d">Spokane, WA</p></li><li><time class="y" datetime="2007">2007</time><p class="t">Intoxicated Dreams of Youth</p><p class="d">Spokane, WA</p></li></ul></div>
+  </section>
+
+  <section class="group" id="service">
+    <div class="heading"><h2>recognition & service</h2></div>
+    <div class="sub"><header><h3>awards, recognition, inclusion in publications</h3></header><ul class="rows "><li><span class="y">2014 <span class="sl">//</span> 2016</span><div><p class="t">Adobe Education Leader</p></div></li><li><time class="y" datetime="2012">2012</time><div><p class="t">Certificate in College Teaching of Art</p></div></li><li><time class="y" datetime="2001">2001</time><div><p class="t">Featured in student publication &quot;The Wire Harp&quot;</p></div></li></ul></div>
+    <div class="sub"><header><h3>professional activities and service</h3></header><ul class="rows plain"><li><div><p class="t">Exhibition Juror</p><p class="d">Terrain 13, Spokane, WA</p></div><p class="m"><span class="mono">2022, 2016, 2013, 2009</span></p></li><li><div><p class="t">Board Member</p><p class="d">NewTech HS, Spokane, WA</p></div><p class="m"><span class="mono">2019 - 2022</span></p></li><li><div><p class="t">Board Member</p><p class="d">Spokane Art School, Spokane, WA</p></div><p class="m"><span class="mono">2017 - 2018</span></p></li><li><div><p class="t">Consulting, Branding, Web Development</p><p class="d">website design, optimization, graphic design, technical consulting</p></div><p class="m"><span class="mono">2008 - present</span></p></li></ul></div>
+  </section>
+</main>
+<footer class="footer">
+  <div class="wrap">
+    <p><strong>travis masingale <span class="sl">//</span> iamsivart</strong><br>a specialist in obscure details. &copy; 2026</p>
+    <nav aria-label="Contact" class="no-print"><a href="https://github.com/sicxz">github <span class="sl">//</span> sicxz</a><a href="#">email <span class="sl">//</span> placeholder</a><a href="#top">back to top</a></nav>
+  </div>
+</footer>
+</body>
+</html>
